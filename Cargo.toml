@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = []
+members = ["eon_data", "eon_types"]
 
 [workspace.package]
 version = "0.1.0"
@@ -9,3 +9,6 @@ license = "MIT"
 authors = ["edinsonjim"]
 
 [workspace.dependencies]
+eon_types = { path = "eon_types" }
+
+serde = { version = "1.0.219", features = ["derive"] }
