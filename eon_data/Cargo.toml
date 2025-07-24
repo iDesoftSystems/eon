@@ -11,6 +11,7 @@ sqlite = ["sea-orm/sqlx-sqlite", "sea-orm/runtime-tokio-rustls"]
 
 [dependencies]
 eon_types = { workspace = true }
+thiserror = { workspace = true }
 sea-orm = { version = "1.1", features = [
     "sqlx-mysql",
     "sqlx-sqlite",
