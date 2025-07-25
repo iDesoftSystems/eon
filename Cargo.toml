@@ -1,21 +1,24 @@
-[workspace]
-resolver = "3"
-members = [
-    "eon_api",
-    "eon_data",
-    "eon_types"
-]
-
-[workspace.package]
+[package]
+name = "eon"
 version = "0.1.0"
 edition = "2024"
 license = "MIT"
 authors = ["edinsonjim"]
+repository = "https://github.com/iDesoftSystems/eon"
 
-[workspace.dependencies]
-eon_types = { path = "eon_types" }
-
+[dependencies]
 serde = { version = "1.0.219", features = ["derive"] }
 axum = { version = "0.8.4" }
 thiserror = { version = "2.0.12" }
 validator = { version = "0.20", features = ["derive"] }
+tracing = { version = "0.1" }
+sea-orm = { version = "1.1", features = [
+    "sqlx-mysql",
+    "sqlx-sqlite",
+    "runtime-tokio-rustls"
+], optional = true }
+
+[features]
+orm = ["dep:sea-orm"]
+orm-mysql = ["orm", "sea-orm/sqlx-mysql", "sea-orm/runtime-tokio-rustls"]
+orm-sqlite = ["orm", "sea-orm/sqlx-sqlite", "sea-orm/runtime-tokio-rustls"]

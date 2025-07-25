@@ -1,4 +1,4 @@
-use eon_types::pagination::{Paged, Pagination};
+use crate::types::pagination::{Paged, Pagination};
 use sea_orm::{ConnectionTrait, DbErr, Paginator, PaginatorTrait, Selector, SelectorTrait};
 
 pub trait IntoPaged<S>

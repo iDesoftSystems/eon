@@ -505,31 +505,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "eon_api"
+name = "eon"
 version = "0.1.0"
 dependencies = [
  "axum",
- "eon_types",
- "serde",
- "thiserror",
- "validator",
-]
-
-[[package]]
-name = "eon_data"
-version = "0.1.0"
-dependencies = [
- "eon_types",
  "sea-orm",
- "thiserror",
-]
-
-[[package]]
-name = "eon_types"
-version = "0.1.0"
-dependencies = [
  "serde",
  "thiserror",
+ "tracing",
+ "validator",
 ]
 
 [[package]]
