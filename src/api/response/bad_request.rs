@@ -1,7 +1,7 @@
+use crate::types::problem::{Field, ProblemDetails};
+use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
-use axum::Json;
-use eon_types::problem::{Field, ProblemDetails};
 use std::borrow::Cow;
 use validator::ValidationErrors;
 
