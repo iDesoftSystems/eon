@@ -1,4 +1,4 @@
-mod client_ext;
+mod client;
 pub mod paginator;
 
 pub use paginator::*;
