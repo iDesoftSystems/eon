@@ -18,7 +18,7 @@ where
 
     let claims = claims_maker.make(user_details);
 
-    let auth_token = backend::encode(claims).await?;
+    let auth_token = backend::encode(claims)?;
 
     Ok(AuthenticationToken::new_bearer(auth_token))
 }
