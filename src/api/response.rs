@@ -5,6 +5,7 @@ mod created;
 mod forbidden;
 mod internal_server;
 mod not_found;
+mod unauthorized;
 mod unprocessable_entity;
 
 pub use api_error::*;
@@ -14,4 +15,5 @@ pub use created::*;
 pub use forbidden::*;
 pub use internal_server::*;
 pub use not_found::*;
+pub use unauthorized::*;
 pub use unprocessable_entity::*;

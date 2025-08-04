@@ -17,8 +17,12 @@ sea-orm = { version = "1.1", features = [
     "sqlx-sqlite",
     "runtime-tokio-rustls"
 ], optional = true }
+jsonwebtoken = { version = "9.3.1", optional = true }
+bcrypt = { version = "0.17.0", optional = true }
+base64 = { version = "0.22.1", optional = true }
 
 [features]
+jwt-auth = ["dep:jsonwebtoken", "dep:bcrypt", "dep:base64"]
 orm = ["dep:sea-orm"]
 orm-mysql = ["orm", "sea-orm/sqlx-mysql", "sea-orm/runtime-tokio-rustls"]
 orm-sqlite = ["orm", "sea-orm/sqlx-sqlite", "sea-orm/runtime-tokio-rustls"]
