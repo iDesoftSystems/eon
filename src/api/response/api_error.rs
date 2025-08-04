@@ -1,5 +1,5 @@
 use crate::api::response::{
-    BadRequest, EntityCodeNotFound, EntityIdNotFound, Forbidden, InternalServer,
+    BadRequest, EntityCodeNotFound, EntityIdNotFound, Forbidden, InternalServer, Unauthorized,
     UnprocessableEntity,
 };
 use axum::response::{IntoResponse, Response};
@@ -10,8 +10,14 @@ pub enum ApiError {
     #[error("Internal error: {0}")]
     Internal(String),
 
-    #[error("forbidden access for user with id: {0}")]
-    Forbidden(i64),
+    #[error("An unexpected authenticator error occurred")]
+    Unexpected(#[from] Box<dyn std::error::Error + Send + Sync>),
+
+    #[error("Forbidden access for user")]
+    Forbidden,
+
+    #[error("Unauthorized access")]
+    Unauthorized,
 
     #[cfg(feature = "orm")]
     #[error(transparent)]
@@ -42,8 +48,8 @@ impl IntoResponse for ApiError {
                 tracing::error!("Internal error: {msg}");
                 InternalServer.into_response()
             }
-            ApiError::Forbidden(id) => {
-                tracing::error!("Forbidden access for user with: {id}");
+            ApiError::Forbidden => {
+                tracing::error!("Forbidden access for current user");
                 Forbidden.into_response()
             }
             ApiError::Validation(errs) => BadRequest(errs).into_response(),
@@ -51,6 +57,11 @@ impl IntoResponse for ApiError {
             ApiError::EntityCodeNotFound(code) => EntityCodeNotFound(code).into_response(),
             ApiError::Message(msg) => UnprocessableEntity(msg).into_response(),
             ApiError::MessageStr(msg) => UnprocessableEntity(msg.to_string()).into_response(),
+            ApiError::Unexpected(err) => {
+                tracing::error!(?err, "Internal error");
+                InternalServer.into_response()
+            }
+            ApiError::Unauthorized => Unauthorized.into_response(),
         }
     }
 }
