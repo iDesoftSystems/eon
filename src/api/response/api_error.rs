@@ -1,6 +1,6 @@
 use crate::api::response::{
-    BadRequest, EntityCodeNotFound, EntityIdNotFound, Forbidden, InternalServer, Unauthorized,
-    UnprocessableEntity,
+    BadRequest, ConflictWithMessage, EntityCodeNotFound, EntityIdNotFound, Forbidden,
+    InternalServer, Unauthorized, UnprocessableEntity,
 };
 use axum::response::{IntoResponse, Response};
 use validator::ValidationErrors;
@@ -37,6 +37,9 @@ pub enum ApiError {
 
     #[error("{0}")]
     MessageStr(&'static str),
+
+    #[error("{0}")]
+    ConflictWithMessageStr(&'static str),
 }
 
 impl IntoResponse for ApiError {
@@ -62,6 +65,9 @@ impl IntoResponse for ApiError {
                 InternalServer.into_response()
             }
             ApiError::Unauthorized => Unauthorized.into_response(),
+            ApiError::ConflictWithMessageStr(msg) => {
+                ConflictWithMessage(msg.to_string()).into_response()
+            }
         }
     }
 }
