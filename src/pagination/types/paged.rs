@@ -1,10 +1,4 @@
-use serde::{Deserialize, Serialize};
-
-#[derive(Debug, Deserialize)]
-pub struct Pagination {
-    pub page_size: u64,
-    pub page: u64,
-}
+use serde::Serialize;
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]

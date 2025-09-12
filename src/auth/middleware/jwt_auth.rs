@@ -1,5 +1,5 @@
-use crate::api::response::ApiError;
 use crate::auth::backend;
+use crate::http::ApiError;
 use axum::extract::Request;
 use axum::http;
 use axum::middleware::Next;

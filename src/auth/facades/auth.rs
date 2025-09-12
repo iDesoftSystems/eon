@@ -1,7 +1,7 @@
-use crate::api::response::ApiError;
 use crate::auth::backend;
 use crate::auth::contract::{ClaimsMaker, UserDetails, UserDetailsFinder};
 use crate::auth::types::AuthenticationToken;
+use crate::http::ApiError;
 use serde::Serialize;
 
 pub async fn authenticate<TClaims, TUserDetails>(
