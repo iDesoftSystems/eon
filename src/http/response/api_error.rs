@@ -1,4 +1,4 @@
-use crate::api::response::{
+use crate::http::response::{
     BadRequest, ConflictWithMessage, EntityCodeNotFound, EntityIdNotFound, Forbidden,
     InternalServer, Unauthorized, UnprocessableEntity,
 };
@@ -7,10 +7,7 @@ use validator::ValidationErrors;
 
 #[derive(Debug, thiserror::Error)]
 pub enum ApiError {
-    #[error("Internal error: {0}")]
-    Internal(String),
-
-    #[error("An unexpected authenticator error occurred")]
+    #[error(transparent)]
     Unexpected(#[from] Box<dyn std::error::Error + Send + Sync>),
 
     #[error("Forbidden access for user")]
@@ -47,10 +44,6 @@ impl IntoResponse for ApiError {
         match self {
             #[cfg(feature = "orm")]
             ApiError::DbError(err) => db_err_into_response(err),
-            ApiError::Internal(msg) => {
-                tracing::error!("Internal error: {msg}");
-                InternalServer.into_response()
-            }
             ApiError::Forbidden => {
                 tracing::error!("Forbidden access for current user");
                 Forbidden.into_response()
@@ -81,17 +74,17 @@ fn db_err_into_response(err: sea_orm::DbErr) -> Response {
             database_err,
         ))) => match database_err.kind() {
             sea_orm::sqlx::error::ErrorKind::UniqueViolation => {
-                crate::api::response::Conflict.into_response()
+                crate::http::response::Conflict.into_response()
             }
             sea_orm::sqlx::error::ErrorKind::ForeignKeyViolation => {
-                crate::api::response::UnprocessableEntity(
+                crate::http::response::UnprocessableEntity(
                     "Cannot delete or update record because it is referenced by another record."
                         .to_string(),
                 )
                 .into_response()
             }
-            _ => crate::api::response::InternalServer.into_response(),
+            _ => crate::http::response::InternalServer.into_response(),
         },
-        _ => crate::api::response::InternalServer.into_response(),
+        _ => crate::http::response::InternalServer.into_response(),
     }
 }

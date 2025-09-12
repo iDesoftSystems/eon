@@ -1,27 +1,5 @@
-use crate::types::pagination::{Paged, Pagination};
+use crate::pagination::{IntoPaged, Paged, Paginate, Pagination};
 use sea_orm::{ConnectionTrait, DbErr, Paginator, PaginatorTrait, Selector, SelectorTrait};
-
-pub trait IntoPaged<S>
-where
-    S: SelectorTrait,
-{
-    fn into_paged(
-        self,
-        pagination: &Pagination,
-    ) -> impl Future<Output = Result<Paged<S::Item>, DbErr>>;
-}
-
-pub trait Paginate<'db, C, S>
-where
-    C: ConnectionTrait,
-    S: SelectorTrait,
-{
-    fn paginate(
-        self,
-        conn: &'db C,
-        pagination: &Pagination,
-    ) -> impl Future<Output = Result<Paged<S::Item>, DbErr>>;
-}
 
 impl<'db, C, S> Paginate<'db, C, S> for Selector<S>
 where

@@ -1,4 +1,4 @@
-pub trait PersistenceClient: Send + Sync + 'static {}
+use crate::contract::PersistenceClient;
 
 pub trait ExecutableCommand<TClient: PersistenceClient + ?Sized> {
     type Output;

@@ -1,4 +1,4 @@
-use crate::api::response::ApiError;
+use crate::http::ApiError;
 use jsonwebtoken::{Algorithm, DecodingKey, Validation};
 use serde::de::DeserializeOwned;
 

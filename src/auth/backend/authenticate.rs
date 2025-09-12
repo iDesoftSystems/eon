@@ -1,6 +1,6 @@
-use crate::api::response::ApiError;
 use crate::auth::contract::UserDetails;
 use crate::auth::contract::UserDetailsFinder;
+use crate::http::ApiError;
 
 pub async fn authenticate<TUserDetails>(
     finder: &impl UserDetailsFinder<TUserDetails>,
