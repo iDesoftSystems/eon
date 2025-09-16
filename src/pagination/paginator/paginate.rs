@@ -1,16 +1,42 @@
 use crate::pagination::{IntoPaged, Paged, Paginate, Pagination};
-use sea_orm::{ConnectionTrait, DbErr, Paginator, PaginatorTrait, Selector, SelectorTrait};
+use sea_orm::{
+    ConnectionTrait, DbErr, EntityTrait, FromQueryResult, Paginator, PaginatorTrait, Select
+    , Selector, SelectorTrait,
+};
 
-impl<'db, C, S> Paginate<'db, C, S> for Selector<S>
+impl<'db, C, S> Paginate<'db, C> for Selector<S>
 where
     C: ConnectionTrait,
     S: SelectorTrait + Send + Sync + 'db,
 {
+    type Selector = S::Item;
+
     async fn paginate(
         self,
         conn: &'db C,
         pagination: &Pagination,
-    ) -> Result<Paged<S::Item>, DbErr> {
+    ) -> Result<Paged<Self::Selector>, DbErr> {
+        let paginator = PaginatorTrait::paginate(self, conn, pagination.page_size);
+
+        let paged = paginator.into_paged(pagination).await?;
+
+        Ok(paged)
+    }
+}
+
+impl<'db, C, M, E> Paginate<'db, C> for Select<E>
+where
+    C: ConnectionTrait,
+    E: EntityTrait<Model = M>,
+    M: FromQueryResult + Sized + Send + Sync + 'db,
+{
+    type Selector = M;
+
+    async fn paginate(
+        self,
+        conn: &'db C,
+        pagination: &Pagination,
+    ) -> Result<Paged<Self::Selector>, DbErr> {
         let paginator = PaginatorTrait::paginate(self, conn, pagination.page_size);
 
         let paged = paginator.into_paged(pagination).await?;
