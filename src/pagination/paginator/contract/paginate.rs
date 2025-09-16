@@ -1,14 +1,15 @@
 use crate::pagination::{Paged, Pagination};
-use sea_orm::{ConnectionTrait, DbErr, SelectorTrait};
+use sea_orm::{ConnectionTrait, DbErr};
 
-pub trait Paginate<'db, C, S>
+pub trait Paginate<'db, C>
 where
     C: ConnectionTrait,
-    S: SelectorTrait,
 {
+    type Selector;
+
     fn paginate(
         self,
         conn: &'db C,
         pagination: &Pagination,
-    ) -> impl Future<Output = Result<Paged<S::Item>, DbErr>>;
+    ) -> impl Future<Output = Result<Paged<Self::Selector>, DbErr>>;
 }
