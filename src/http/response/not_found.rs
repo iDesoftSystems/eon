@@ -1,7 +1,18 @@
-use crate::http::ProblemDetails;
-use axum::Json;
+use crate::http::{ProblemDetails, ResourceId};
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
+use axum::Json;
+
+pub struct ResourceNotFound(pub ResourceId);
+
+impl IntoResponse for ResourceNotFound {
+    fn into_response(self) -> Response {
+        let details =
+            ProblemDetails::from(format!("Resource not found with identifier: {}", self.0));
+
+        (StatusCode::NOT_FOUND, Json(details)).into_response()
+    }
+}
 
 pub struct EntityIdNotFound(pub i64);
 
