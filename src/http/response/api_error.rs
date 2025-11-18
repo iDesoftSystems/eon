@@ -1,11 +1,11 @@
+use crate::http::ResourceId;
+use crate::http::ResourceNotFound;
 use crate::http::response::BadRequest;
 use crate::http::response::ConflictWithMessage;
 use crate::http::response::Forbidden;
 use crate::http::response::InternalServer;
 use crate::http::response::Unauthorized;
 use crate::http::response::UnprocessableEntity;
-use crate::http::ResourceNotFound;
-use crate::http::{EntityCodeNotFound, EntityIdNotFound, ResourceId};
 use axum::response::{IntoResponse, Response};
 use std::fmt::Debug;
 use validator::ValidationErrors;
@@ -27,14 +27,6 @@ pub enum ApiError {
 
     #[error(transparent)]
     Validation(#[from] ValidationErrors),
-
-    #[error("Entity not found with id: {0}")]
-    #[deprecated(since = "0.5.0", note = "Use ResourceNotFound instead")]
-    EntityIdNotFound(i64),
-
-    #[error("Entity not found with code: {0}")]
-    #[deprecated(since = "0.5.0", note = "Use ResourceNotFound instead")]
-    EntityCodeNotFound(String),
 
     #[error("Resource not found")]
     ResourceNotFound(ResourceId),
@@ -72,8 +64,6 @@ impl IntoResponse for ApiError {
             ApiError::ResourceNotFound(resource_id) => {
                 ResourceNotFound(resource_id).into_response()
             }
-            ApiError::EntityIdNotFound(id) => EntityIdNotFound(id).into_response(),
-            ApiError::EntityCodeNotFound(code) => EntityCodeNotFound(code).into_response(),
         }
     }
 }
