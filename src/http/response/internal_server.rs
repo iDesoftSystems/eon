@@ -3,6 +3,7 @@ use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 
+/// Represents a 500 Internal Server Error response.
 pub struct InternalServer;
 
 impl IntoResponse for InternalServer {

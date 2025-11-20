@@ -3,6 +3,7 @@ use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 
+/// Represents a 403 Forbidden response.
 pub struct Forbidden;
 
 impl IntoResponse for Forbidden {

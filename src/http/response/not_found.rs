@@ -3,6 +3,10 @@ use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 
+/// Represents a 404 Not Found response.
+///
+/// This struct wraps a `ResourceId` and converts it into a `ProblemDetails` response
+/// with a descriptive message.
 pub struct ResourceNotFound(pub ResourceId);
 
 impl IntoResponse for ResourceNotFound {

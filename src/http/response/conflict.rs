@@ -3,6 +3,7 @@ use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 
+/// Represents a 409 Conflict response with a default message.
 pub struct Conflict;
 
 impl IntoResponse for Conflict {
@@ -15,6 +16,7 @@ impl IntoResponse for Conflict {
     }
 }
 
+/// Represents a 409 Conflict response with a custom message.
 pub struct ConflictWithMessage(pub String);
 
 impl IntoResponse for ConflictWithMessage {

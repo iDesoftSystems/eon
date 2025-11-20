@@ -3,6 +3,7 @@ use axum::Json;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 
+/// Represents a 401 Unauthorized response.
 pub struct Unauthorized;
 
 impl IntoResponse for Unauthorized {

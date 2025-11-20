@@ -1,5 +1,6 @@
 use serde::Serialize;
 
+/// Represents a validation error for a specific field.
 #[derive(Serialize)]
 pub struct Field {
     pub field: String,
