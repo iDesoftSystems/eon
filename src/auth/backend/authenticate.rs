@@ -2,6 +2,18 @@ use crate::auth::contract::UserDetails;
 use crate::auth::contract::UserDetailsFinder;
 use crate::http::ApiError;
 
+/// Authenticates a user by verifying their username and password.
+///
+/// # Arguments
+///
+/// * `finder` - A reference to an object implementing `UserDetailsFinder`.
+/// * `username` - The username to authenticate.
+/// * `password` - The password to verify.
+///
+/// # Returns
+///
+/// * `Ok(TUserDetails)` - The user details if authentication is successful.
+/// * `Err(ApiError)` - An error if authentication fails (e.g., invalid credentials, user disabled).
 pub async fn authenticate<TUserDetails>(
     finder: &impl UserDetailsFinder<TUserDetails>,
     username: &str,
