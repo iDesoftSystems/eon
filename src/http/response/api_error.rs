@@ -10,6 +10,9 @@ use axum::response::{IntoResponse, Response};
 use std::fmt::Debug;
 use validator::ValidationErrors;
 
+/// Represents all possible errors that can occur in the API.
+///
+/// This enum implements `IntoResponse` to automatically convert errors into appropriate HTTP responses.
 #[derive(Debug, thiserror::Error)]
 pub enum ApiError {
     #[error(transparent)]

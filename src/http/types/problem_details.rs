@@ -1,6 +1,9 @@
 use crate::http::types::Field;
 use serde::Serialize;
 
+/// Represents a standard problem details response (RFC 7807).
+///
+/// This struct is used to return structured error information to the client.
 #[derive(Serialize)]
 pub struct ProblemDetails {
     pub detail: String,

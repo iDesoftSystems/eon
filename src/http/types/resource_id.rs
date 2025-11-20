@@ -1,5 +1,9 @@
 use std::fmt::Display;
 
+/// Represents a unique identifier for a resource.
+///
+/// This enum supports various ID types (integers and strings) and implements `Display`
+/// for easy formatting.
 #[derive(Debug)]
 pub enum ResourceId {
     U32(u32),

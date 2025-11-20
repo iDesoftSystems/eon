@@ -4,6 +4,9 @@ use axum::response::{IntoResponse, Response};
 
 use serde::Serialize;
 
+/// Represents a 201 Created response.
+///
+/// This struct wraps an identifier or object and serializes it as JSON.
 #[derive(Serialize)]
 pub struct Created<T>
 where

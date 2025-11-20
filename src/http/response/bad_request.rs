@@ -5,6 +5,10 @@ use axum::response::{IntoResponse, Response};
 use std::borrow::Cow;
 use validator::ValidationErrors;
 
+/// Represents a 400 Bad Request response.
+///
+/// This struct wraps `ValidationErrors` and converts them into a `ProblemDetails` response
+/// containing a list of field errors.
 pub struct BadRequest(pub ValidationErrors);
 
 trait IntoFields {
