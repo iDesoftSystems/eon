@@ -2,6 +2,16 @@ use crate::http::ApiError;
 use jsonwebtoken::{Algorithm, DecodingKey, Validation};
 use serde::de::DeserializeOwned;
 
+/// Decodes a JWT access token into claims.
+///
+/// # Arguments
+///
+/// * `access_token` - The JWT access token string.
+///
+/// # Returns
+///
+/// * `Ok(TClaims)` - The decoded claims if the token is valid.
+/// * `Err(ApiError)` - An error if decoding fails (e.g., invalid token, expired token).
 pub fn decode<TClaims>(access_token: &str) -> Result<TClaims, ApiError>
 where
     TClaims: DeserializeOwned,

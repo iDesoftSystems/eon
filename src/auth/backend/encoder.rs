@@ -2,6 +2,16 @@ use crate::http::ApiError;
 use jsonwebtoken::{Algorithm, EncodingKey, Header};
 use serde::Serialize;
 
+/// Encodes claims into a JWT access token.
+///
+/// # Arguments
+///
+/// * `claims` - The claims to encode into the token.
+///
+/// # Returns
+///
+/// * `Ok(String)` - The generated JWT access token string.
+/// * `Err(ApiError)` - An error if encoding fails.
 pub fn encode<TClaims>(claims: TClaims) -> Result<String, ApiError>
 where
     TClaims: Serialize,
