@@ -1,15 +1,14 @@
 use crate::chrono_ext::date::EndOfDay;
-use chrono::NaiveDateTime;
 
-#[cfg(feature = "chrono_ext")]
+#[cfg(feature = "chrono-ext")]
 impl EndOfDay for chrono::NaiveDate {
-    fn end_of_day(&self) -> Option<NaiveDateTime> {
+    fn end_of_day(&self) -> Option<chrono::NaiveDateTime> {
         self.and_hms_micro_opt(23, 59, 59, 999_999)
     }
 }
 
 #[cfg(test)]
-#[cfg(feature = "chrono_ext")]
+#[cfg(feature = "chrono-ext")]
 mod tests {
     use super::*;
     use chrono::NaiveDate;

@@ -1,6 +1,6 @@
 #[cfg(feature = "jwt-auth")]
 pub mod auth;
-#[cfg(feature = "chrono_ext")]
+#[cfg(feature = "chrono-ext")]
 pub mod chrono_ext;
 pub mod command;
 pub mod contract;
