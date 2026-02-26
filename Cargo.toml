@@ -17,6 +17,11 @@ sea-orm = { version = "1.1.19", features = [
     "sqlx-sqlite",
     "runtime-tokio-rustls",
 ], optional = true }
+tokio = { version = "1.49.0", features = [
+    "macros",
+    "rt-multi-thread",
+    "signal",
+] }
 jsonwebtoken = { version = "10.2.0", features = [
     "rust_crypto",
 ], optional = true }
@@ -30,3 +35,6 @@ orm = ["dep:sea-orm"]
 orm-mysql = ["orm", "sea-orm/sqlx-mysql", "sea-orm/runtime-tokio-rustls"]
 orm-sqlite = ["orm", "sea-orm/sqlx-sqlite", "sea-orm/runtime-tokio-rustls"]
 chrono_ext = ["dep:chrono"]
+
+[dev-dependencies]
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
