@@ -34,7 +34,7 @@ jwt-auth = ["dep:jsonwebtoken", "dep:bcrypt", "dep:base64"]
 orm = ["dep:sea-orm"]
 orm-mysql = ["orm", "sea-orm/sqlx-mysql", "sea-orm/runtime-tokio-rustls"]
 orm-sqlite = ["orm", "sea-orm/sqlx-sqlite", "sea-orm/runtime-tokio-rustls"]
-chrono_ext = ["dep:chrono"]
+chrono-ext = ["dep:chrono"]
 
 [dev-dependencies]
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
