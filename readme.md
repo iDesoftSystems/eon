@@ -19,24 +19,56 @@ building on Rust's conventions and ecosystem, Eon ensures high compatibility and
 
 ## Included Tools
 
-Eon offers a set of essential tools for web development:
+Eon offers a set of essential tools for web development, designed to handle common tasks with ease:
 
-- **Authentication**: Components for handling user authentication.
-- **Pagination**: Utilities for managing and structuring paginated data.
-- **HTTP**: Types and builders for creating simple and safe HTTP responses.
-- **ExecutableCommand**: An interface for designing and executing commands in a structured way.
-- **CommandHandler**: A pattern for managing the execution of your commands, ideal for event-driven architectures.
-- **ORM**: A collection of utilities for working with sea-orm.
-- **Utils**: A collection of useful utilities.
+- **HttpServer Runtime**: A simple and powerful runner for Axum services with built-in graceful shutdown and environment-based configuration.
+- **Authentication**: Secure components for handling user authentication, including **JWT** support with built-in middleware and password hashing.
+- **Pagination**: flexible utilities for managing and structuring paginated data, compatible with standard API response formats.
+- **HTTP**: Typed builders for creating consistent and safe HTTP responses, simplifying error handling and success results.
+- **ExecutableCommand**: A structured interface for designing business logic commands, promoting clean separation of concerns.
+- **CommandHandler**: A robust pattern for managing command execution, ideal for building scalable and testable architectures.
+- **ORM Utilities**: Seamless integration with `sea-orm`, providing common patterns and utilities for database operations.
+- **Utils**: A collection of essential helper functions for everyday Rust development.
 
-## Getting Started
+## Quick Start
 
-To start using Eon, add the following packages to your `Cargo.toml` file:
+### Installation
+
+To start using Eon, add it to your `Cargo.toml`. Since we are in active development, it is recommended to use the Git repository:
 
 ```toml
 [dependencies]
-eon = { git = "https://github.com/iDesoftSystems/eon.git", version = "x.y.z" }
+eon = { git = "https://github.com/iDesoftSystems/eon.git" }
 ```
 
-Note: It's important to use the development version from the Git repository, as the project has not yet been published
-on `crates.io`.
+### Usage Example: HTTP Server
+
+Setting up a server with graceful shutdown is as simple as:
+
+```rust
+use eon::http::runtime::HttpServer;
+use axum::Router;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let app = Router::new();
+    let server = HttpServer::from_env(app);
+    
+    server.run().await?;
+    Ok(())
+}
+```
+
+## Features
+
+Eon is modular. You can enable only what you need:
+
+- `jwt-auth`: Enables JWT authentication tools.
+- `orm`: Enables base ORM utilities.
+- `orm-mysql`: Enables MySQL-specific ORM support.
+- `orm-sqlite`: Enables SQLite-specific ORM support.
+- `chrono-ext`: Enables extended Chrono utilities.
+
+---
+
+Note: **Eon** is currently optimized for internal projects at **iDesoft Systems** but is built to be a general-purpose toolkit for the Rust community.
